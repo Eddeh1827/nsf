@@ -1,9 +1,103 @@
 .App {
-  text-align: center;
+  text-align: left;
+  height: 100%;
+  width: 100%;
+  background-color: gray;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Roboto";
+}
+.container {
+  background-color: white;
+  width: 1000px;
+  display: flex;
+  align-items: center;
+  flex-basis: max-content;
+  margin: 2em auto;
+  border-radius: 30px;
+}
+.card-left {
+  width: 600px;
+  height: 100%;
+  margin-left: 5%;
+}
+.content-left {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 3em;
+  margin-top: 2em;
+  text-align: left;
+}
+.content-left h1 {
+  font-size: 2em;
+  text-align: left;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+.content-left p {
+  width: 460px;
+}
+section.list {
+  margin-top: 1em;
+}
+.list div {
+  display: flex;
+}
+form {
+  margin-top: 2em;
+}
+input[type="email"] {
+  border: 1px solid gray;
+  padding: 0.5em;
+  width: 80%;
+}
+input[type="email"]::placeholder {
+  color: gray;
+}
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5em;
+}
+section p {
+  margin: 0.41em 0.9em;
+}
+button {
+  display: block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 14px 24px;
+  margin-top: 20px;
+  margin-bottom: 3em;
+  width: 80%;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
+    -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: black;
+  color: #fff;
+}
+
+</* Card Right CSS */
+.card-right {
+  width: 100%;
+}
+.card-right img {
+  padding: 1.5em 0;
+  height: 90%;
+  margin-right: 2.5em;
+}
+.hidden {
+  display: none;
 }
 .attribution {
   font-size: 11px;
   text-align: center;
+  width: 100%;
 }
 .attribution a {
   color: hsl(228, 45%, 44%);
