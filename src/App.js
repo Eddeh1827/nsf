@@ -1,7 +1,61 @@
-import "./App.css";
-import imageRight from "./assets/images/illustration-sign-up-desktop.svg";
+import { useState, useEffect } from "react";
+import imageRightBig from "./assets/images/illustration-sign-up-desktop.svg";
+import imageRightSm from "./assets/images/illustration-sign-up-mobile.svg";
 import iconList from "./assets/images/icon-list.svg";
+import "./App.css";
+
 function App() {
+  // const [email, setEmail] = useState("");
+  // const [success, setSuccess] = useState(false);
+  const [imageSrc, setImageSrc] = useState(imageRightBig);
+  const imageObject = {
+    imageDesktop: imageRightBig,
+    imageMobile: imageRightSm,
+  };
+  useEffect(() => {
+    // Step 3: Add a "load" event listener for initial size
+
+    const handleLoad = () => {
+      // Check window dimensions and update src accordingly
+      if (window.innerWidth < 1000) {
+        setImageSrc(`.${imageObject.imageMobile}`);
+      } else {
+        setImageSrc(`.${imageObject.imageDesktop}`);
+      }
+    };
+    // Add a "resize" event listener for window resizing
+    const handleResize = () => {
+      // Check window dimensions and update src accordingly
+      if (window.innerWidth < 1000) {
+        setImageSrc(`.${imageObject.imageMobile}`);
+      } else {
+        setImageSrc(`.${imageObject.imageDesktop}`);
+      }
+    };
+
+    // Attach the "load" event listener when the component mounts
+
+    window.addEventListener("load", handleLoad);
+
+    // Attach the "resize" event listener for window resizing
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      window.removeEventListener("load", handleLoad);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setSuccess(true);
+  // };
+
+  // const handleChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
+
   return (
     <div className="App">
       {/*Sign-up form start*/}
@@ -13,15 +67,15 @@ function App() {
             <div>
               <section className="list">
                 <div>
-                  <img src={iconList} />
+                  <img src={iconList} alt="checkmark" />
                   <p>Product discovery and building what matters</p>
                 </div>
                 <div>
-                  <img src={iconList} />
+                  <img src={iconList} alt="checkmark" />
                   <p>Measuring to ensure updates are a success</p>
                 </div>
                 <div>
-                  <img src={iconList} />
+                  <img src={iconList} alt="checkmark" />
                   <p>And much more!</p>
                 </div>
               </section>
@@ -32,7 +86,7 @@ function App() {
                   id="email"
                   placeholder="email@company.com"
                   autoComplete
-                ></input>
+                />
                 <button>Subscribe to monthly newsletter</button>
               </form>
             </div>
@@ -40,7 +94,7 @@ function App() {
           </div>
         </div>
         <div className="card-right">
-          <img src={imageRight} alt="" />
+          <img src={imageSrc} alt="background design" />
         </div>
         {/*Success message start*/}
 
@@ -66,7 +120,7 @@ function App() {
         >
           Frontend Mentor
         </a>
-        . Coded by <a href="javascript:void(0)">Eddie Bickham</a>.
+        . Coded by <a href="#">Eddie Bickham</a>.
       </div>
     </div>
   );
