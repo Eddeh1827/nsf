@@ -1,63 +1,43 @@
 import { useState, useEffect } from "react";
+import EmailModal from "./Modal.js";
 import imageRightBig from "./assets/images/illustration-sign-up-desktop.svg";
 import imageRightSm from "./assets/images/illustration-sign-up-mobile.svg";
 import iconList from "./assets/images/icon-list.svg";
 import "./App.css";
 
 function App() {
-  // const [email, setEmail] = useState("");
-  // const [success, setSuccess] = useState(false);
-  const [imageSrc, setImageSrc] = useState(imageRightBig);
+  const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [IsModalOpen, setIsModalOpen] = useState(false);
+
   const imageObject = {
     imageDesktop: imageRightBig,
     imageMobile: imageRightSm,
   };
-  useEffect(() => {
-    // Step 3: Add a "load" event listener for initial size
 
-    const handleLoad = () => {
-      // Check window dimensions and update src accordingly
-      if (window.innerWidth < 1000) {
-        setImageSrc(`.${imageObject.imageMobile}`);
-      } else {
-        setImageSrc(`.${imageObject.imageDesktop}`);
-      }
-    };
-    // Add a "resize" event listener for window resizing
-    const handleResize = () => {
-      // Check window dimensions and update src accordingly
-      if (window.innerWidth < 1000) {
-        setImageSrc(`.${imageObject.imageMobile}`);
-      } else {
-        setImageSrc(`.${imageObject.imageDesktop}`);
-      }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(validEmail);
+    if (validEmail) {
+      setIsModalOpen(true);
+    }
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEmail("");
+    setValidEmail(false);
+  };
 
-    // Attach the "load" event listener when the component mounts
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
 
-    window.addEventListener("load", handleLoad);
-
-    // Attach the "resize" event listener for window resizing
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listeners when the component unmounts
-    return () => {
-      window.removeEventListener("load", handleLoad);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once on mount
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setSuccess(true);
-  // };
-
-  // const handleChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
+    isValid ? setValidEmail(true) : setValidEmail(false);
+  };
 
   return (
     <div className="App">
+      <EmailModal isOpen={IsModalOpen} onClose={closeModal} />
       {/*Sign-up form start*/}
       <div className="container">
         <div className="card-left">
@@ -79,37 +59,30 @@ function App() {
                   <p>And much more!</p>
                 </div>
               </section>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email address</label>
                 <input
                   type="email"
                   id="email"
+                  onChange={handleChange}
                   placeholder="email@company.com"
-                  autoComplete
                 />
-                <button>Subscribe to monthly newsletter</button>
+                <button type="submit">Subscribe to monthly newsletter</button>
               </form>
             </div>
             {/*Sign-up form end*/}
           </div>
         </div>
         <div className="card-right">
-          <img src={imageSrc} alt="background design" />
+          <picture>
+            <source
+              media="(width <= 1065px)"
+              srcSet={`${imageObject.imageMobile}`}
+            />
+            <img src={`${imageObject.imageDesktop}`} alt="Responsive Image" />
+          </picture>
         </div>
         {/*Success message start*/}
-
-        {/* 
-        <div className="hidden">
-          <p>Thanks for subscribing!</p>
-          <p>A confirmation email has been sent to ash@loremcompany.com.</p>
-          <p>
-            Please open it and click the button inside to confirm your
-            subscription.
-          </p>
-          <p>Dismiss message</p>
-          
-        </div>
-      */}
       </div>
       <div className="attribution">
         Challenge by{" "}
